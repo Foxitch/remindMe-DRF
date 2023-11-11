@@ -1,3 +1,21 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Create your models here.
+
+class Board(models.Model):
+    name = models.CharField(max_length=32)
+
+    def __str__(self) -> str:
+        return f'Board {self.name}'
+
+
+class ToDoList(models.Model):
+    title = models.CharField(max_length=32)
+    done = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_created=True)
+    updated = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(to=User, on_delete=models.PROTECT)
+    board = models.ForeignKey(to=Board, on_delete=models.PROTECT)
+
+    def __str__(self) -> str:
+        return f'ToDoList {self.title} created at {self.created}'
