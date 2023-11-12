@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from models import Board, ToDoList
+from to_do.models import Board, ToDoList
 
 
 class BoardCreateApiViewSerializer(serializers.ModelSerializer):
@@ -14,6 +14,6 @@ class ToDoListApiViewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BoardListApiViewSerializer(serializers.ModelSerializer):
+class BoardListApiViewSerializer(serializers.Serializer):
     name = serializers.CharField()
     count = serializers.IntegerField()
