@@ -1,8 +1,10 @@
-from django.db.models import Count
+from django.db.models import Count, QuerySet
 from rest_framework import generics, permissions
 
-from to_do.models import Board
-from to_do.serializers import BoardListApiViewSerializer, BoardCreateApiViewSerializer
+from to_do.models import Board, ToDoList
+from to_do.serializers import (BoardCreateApiViewSerializer,
+                               BoardListApiViewSerializer,
+                               ToDoListApiViewSerializer)
 
 
 class BoardListApiView(generics.ListAPIView):
@@ -12,9 +14,9 @@ class BoardListApiView(generics.ListAPIView):
     """
 
     serializer_class = BoardListApiViewSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,]
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         queryset = Board.objects.annotate(count=Count('todolist__board'))
         return queryset
 
@@ -26,7 +28,7 @@ class BoardCreateApiView(generics.CreateAPIView):
     """
 
     serializer_class = BoardCreateApiViewSerializer
-    permission_classes = [permissions.IsAdminUser,]
+    permission_classes = (permissions.IsAdminUser,)
 
 
 class BoardUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
@@ -36,5 +38,29 @@ class BoardUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
     """
 
     serializer_class = BoardCreateApiViewSerializer
-    permission_classes = [permissions.IsAdminUser,]
+    permission_classes = (permissions.IsAdminUser,)
     queryset = Board.objects.all()
+
+
+class TodoCreateApiView(generics.CreateAPIView):
+    """
+    API for to do creating
+    permission: -IsAdmin
+    """
+
+    serializer_class = ToDoListApiViewSerializer
+    permission_classes = (permissions.IsAdminUser,)
+    queryset = ToDoList.objects.all()
+
+
+class TodoListApiView(generics.ListAPIView):
+    """
+    API for getting list of all ToDos
+    permission: -IsAuth
+    """
+    serializer_class = ToDoListApiViewSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def get_queryset(self) -> QuerySet:
+        queryset = ToDoList.objects.filter(board=self.kwargs['board'])
+        return queryset
