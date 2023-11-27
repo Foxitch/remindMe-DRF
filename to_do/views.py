@@ -1,5 +1,6 @@
 from overrides import override
 from rest_framework import permissions
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -19,7 +20,7 @@ class BoardViewSet(ModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     @override
-    def list(self, request, *args, **kwargs) -> Response:
+    def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
         queryset = self.filter_queryset(self.get_queryset())
         data = self.get_serializer(queryset, many=True).data
         for board_data in data:
