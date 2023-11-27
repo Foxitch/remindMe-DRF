@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'reminder',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'remindMe.core.pagination.CustomPagination',
+    'PAGE_SIZE': 15
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

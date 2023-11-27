@@ -1,7 +1,7 @@
 from django.urls import path
 
-from reminder.views import ReminderListAPIView, ReminderCreateAPIView, ReminderDeleteAPIView
-
+from reminder.views import (ReminderCreateAPIView, ReminderDeleteAPIView,
+                            ReminderListAPIView)
 
 urlpatterns = [
     path('reminders-list/', ReminderListAPIView.as_view()),

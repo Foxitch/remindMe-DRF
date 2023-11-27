@@ -5,7 +5,9 @@ from to_do.models import Board, ToDoList
 
 @admin.register(Board)
 class BoardAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'name',)
+    fields = ('name',)
+    ordering = ('id', 'name',)
 
 
 @admin.register(ToDoList)

@@ -1,46 +1,33 @@
-from django.db.models import Count, QuerySet
+from django.db.models import QuerySet
+from overrides import override
 from rest_framework import generics, permissions
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from to_do.models import Board, ToDoList
 from to_do.permissions import IsOwnerOrAdminPermission
-from to_do.serializers import (BoardCreateApiViewSerializer,
-                               BoardListApiViewSerializer,
-                               ToDoListApiViewSerializer)
+from to_do.serializers import BoardSerializer, ToDoListApiViewSerializer
 
 
-class BoardListApiView(generics.ListAPIView):
+class BoardViewSet(ModelViewSet):
     """
-    API for Boards with counts from todo_list for each board
-    permission: -IsAuth
+    API for CRUD boards with counts from todo_list for each board
+    permission: -IsAuthOrReadOnly
     """
 
-    serializer_class = BoardListApiViewSerializer
+    queryset = Board.objects.all()
+    serializer_class = BoardSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def get_queryset(self) -> QuerySet:
-        queryset = Board.objects.annotate(count=Count('todolist__board'))
-        return queryset
-
-
-class BoardCreateApiView(generics.CreateAPIView):
-    """
-    API for creating Board
-    permission: -IsAdmin
-    """
-
-    serializer_class = BoardCreateApiViewSerializer
-    permission_classes = (permissions.IsAdminUser,)
-
-
-class BoardUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    API for updating and deleting Boards
-    permission: -IsAdmin
-    """
-
-    serializer_class = BoardCreateApiViewSerializer
-    permission_classes = (permissions.IsAdminUser,)
-    queryset = Board.objects.all()
+    @override
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        data = self.get_serializer(queryset, many=True).data
+        for board_data in data:
+            board_id = board_data['id']
+            todo_count = ToDoList.objects.filter(board_id=board_id).count()
+            board_data['todo_count'] = todo_count
+        return Response(data)
 
 
 class TodoCreateApiView(generics.CreateAPIView):

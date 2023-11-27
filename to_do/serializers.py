@@ -3,18 +3,15 @@ from rest_framework import serializers
 from to_do.models import Board, ToDoList
 
 
-class BoardCreateApiViewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Board
-        fields = ['name', ]
-
-
 class ToDoListApiViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ToDoList
         fields = '__all__'
 
 
-class BoardListApiViewSerializer(serializers.Serializer):
+class BoardSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
-    count = serializers.IntegerField()
+
+    class Meta:
+        model = Board
+        fields = '__all__'
