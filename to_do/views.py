@@ -38,12 +38,4 @@ class TodoViewSet(ModelViewSet):
     serializer_class = ToDoListApiViewSerializer
     permission_classes = (IsOwnerOrAdminPermission,)
     queryset = ToDoList.objects.all()
-
-    @override
-    def list(self, request, *args, **kwargs) -> Response:
-        if request.query_params.get('done') == 'true':
-            queryset = ToDoList.objects.filter(done=True)
-        else:
-            queryset = self.filter_queryset(self.get_queryset())
-        data = self.get_serializer(queryset, many=True).data
-        return Response(data=data)
+    filterset_fields = ('done',)
