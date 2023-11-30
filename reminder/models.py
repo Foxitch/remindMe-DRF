@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.db import models
 from django.utils import timezone
 
@@ -11,7 +13,7 @@ class Reminder(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_triggered = models.BooleanField(default=False)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args: Any, **kwargs: dict) -> None:
         super(Reminder, self).save(*args, **kwargs)
         if not self.is_triggered:
             send_reminder_email.apply_async(args=[self.id], eta=timezone.now() + timezone.timedelta(seconds=self.delay))

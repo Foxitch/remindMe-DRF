@@ -4,7 +4,6 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-from remindMe.core.pagination import CustomPagination
 from to_do.models import Board, ToDoList
 from to_do.permissions import IsOwnerOrAdminPermission
 from to_do.serializers import BoardSerializer, ToDoListApiViewSerializer
