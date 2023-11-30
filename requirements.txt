@@ -2,16 +2,19 @@ amqp==5.2.0
 asgiref==3.7.2
 async-timeout==4.0.3
 billiard==4.2.0
-celery==5.3.5
+celery==5.3.6
 click==8.1.7
 click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.3.0
 Django==4.2.7
+django-filter==23.4
 djangorestframework==3.14.0
 drf-yasg==1.21.7
 inflection==0.5.1
+isort==5.12.0
 kombu==5.3.3
+overrides==7.4.0
 packaging==23.2
 prompt-toolkit==3.0.40
 python-dateutil==2.8.2
@@ -24,6 +27,3 @@ tzdata==2023.3
 uritemplate==4.1.1
 vine==5.1.0
 wcwidth==0.2.9
-isort==5.12.0
-overrides==7.4.0
-django-filter==23.4

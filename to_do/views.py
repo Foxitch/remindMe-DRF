@@ -4,6 +4,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
+from remindMe.core.pagination import CustomPagination
 from to_do.models import Board, ToDoList
 from to_do.permissions import IsOwnerOrAdminPermission
 from to_do.serializers import BoardSerializer, ToDoListApiViewSerializer
@@ -18,6 +19,7 @@ class BoardViewSet(ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    pagination_class = (CustomPagination,)
 
     @override
     def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
