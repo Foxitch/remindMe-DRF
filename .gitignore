@@ -1,7 +1,7 @@
-db.sqllite3
  __pycache__
 venv
 .idea
 debug.py
 *.pyc
 .env
+/db.sqlite3

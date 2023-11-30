@@ -1,7 +1,11 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework import routers
 
-from reminder.views import ReminderCreateAPIView
+from reminder.views import ReminderViewSet
+
+router = routers.SimpleRouter()
+router.register(prefix=r'reminder', viewset=ReminderViewSet)
 
 urlpatterns = [
-    path('reminders/', ReminderCreateAPIView.as_view()),
+    path('', include(router.urls)),
 ]

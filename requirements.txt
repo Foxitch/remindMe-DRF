@@ -13,7 +13,7 @@ djangorestframework==3.14.0
 drf-yasg==1.21.7
 inflection==0.5.1
 isort==5.12.0
-kombu==5.3.3
+kombu==5.3.4
 overrides==7.4.0
 packaging==23.2
 prompt-toolkit==3.0.40
@@ -27,3 +27,4 @@ tzdata==2023.3
 uritemplate==4.1.1
 vine==5.1.0
 wcwidth==0.2.9
+django_celery_beat==2.5.0

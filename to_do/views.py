@@ -19,7 +19,6 @@ class BoardViewSet(ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-    pagination_class = (CustomPagination,)
 
     @override
     def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:

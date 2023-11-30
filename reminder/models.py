@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.timezone import now
 
 from reminder.tasks import send_reminder_email
 
@@ -9,7 +8,6 @@ class Reminder(models.Model):
     email = models.EmailField()
     text = models.TextField(max_length=400)
     delay = models.IntegerField(default=10)
-    due_date = models.DateTimeField(default=now, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     is_triggered = models.BooleanField(default=False)
 

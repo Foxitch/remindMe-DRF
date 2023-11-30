@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_beat',
     'drf_yasg',
     'rest_framework',
     'to_do',
     'reminder',
     'django_filters',
 ]
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'remindMe.core.pagination.CustomPagination',
@@ -129,3 +132,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Redis
+REDIS_HOST = '127.0.0.1'
+REDIS_PORT = 6379
+
+# Celery
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}'
+CELERY_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}'

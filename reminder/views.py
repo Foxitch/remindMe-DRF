@@ -1,11 +1,11 @@
 from rest_framework import permissions
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 
 from reminder.models import Reminder
 from reminder.serializers import ReminderListSerializer
 
 
-class ReminderCreateAPIView(RetrieveUpdateDestroyAPIView):
+class ReminderViewSet(ModelViewSet):
     """
     API for creating Reminders
     permission: IsAdmin
